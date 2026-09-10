@@ -90,10 +90,15 @@ Na raiz do repositório, execute o comando para subir toda a infraestrutura:
 Abaixo encontra-se uma amostragem típica do console demonstrando a atualização concorrente dos relógios vetoriais e o funcionamento do algoritmo de eleição do Bully entre os workers:
 
 [2026-09-10 10:15:00] [INFO] [Worker-1] Conectado ao RabbitMQ na fila 'recharge_queue'.
+
 [2026-09-10 10:15:02] [INFO] [Worker-1] Mensagem recebida. Relógio Vetorial anterior: {'worker-1': 0, 'worker-2': 0}
+
 [2026-09-10 10:15:02] [INFO] [Worker-1] Evento processado causalmente. Novo Relógio Vetorial: {'worker-1': 1, 'worker-2': 0}
+
 [2026-09-10 10:15:05] [WARNING] [Worker-2] Conexão com o líder perdida. Iniciando Algoritmo do Bully...
+
 [2026-09-10 10:15:05] [INFO] [Worker-2] Enviando mensagem ELECTION para nós com IDs superiores.
+
 [2026-09-10 10:15:06] [INFO] [Worker-2] Nenhuma resposta recebida. Declarando-se o novo líder (Coordenador).
 
 ## Declaração de Uso de IA
