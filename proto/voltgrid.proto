@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package voltgrid;
+
+service VoltGridService {
+  rpc RequestRecharge (RechargeRequest) returns (RechargeResponse);
+}
+
+message RechargeRequest {
+  string station_id = 1;
+  string vehicle_id = 2;
+  double power_kw = 3;
+}
+
+message RechargeResponse {
+  string transaction_id = 1;
+  string status = 2;
+  string message = 3;
+}
