@@ -48,37 +48,7 @@ O projeto fundamenta-se no padrão "A Metrópole Resiliente" e atende rigorosame
 
 ## Diagrama de Arquitetura e Fluxo de Mensagens
 O diagrama abaixo ilustra a topologia de rede, as portas utilizadas e o fluxo de dados entre os componentes do sistema:
-
-+-----------------------------------+
-|      Cliente / Estação gRPC       |
-+-----------------------------------+
-                  | 
-                  | gRPC (Porta 50051)
-                  v
-+-----------------------------------+
-|          Gateway Server           |
-|      (gateway/gateway_server.py)  |
-+-----------------------------------+
-                  |
-                  | Publica mensagem JSON (recharge_queue)
-                  v
-+-----------------------------------+
-|          RabbitMQ Broker          |
-|  (Portas: 5672 App / 15672 Web)   |
-+-----------------------------------+
-                  |
-                  | Despacho Justo (Competing Consumers)
-                  v
-+-----------------------------------+-----------------------------------+
-|             Worker 1              |             Worker 2 ...          |
-|      (Relógio Vetorial & Bully)   |      (Relógio Vetorial & Bully)   |
-+-----------------------------------+-----------------------------------+
-                  |
-                  v
-+-----------------------------------+
-|       Persistência Replicada      |
-|      (storage.py / Backup)        |
-+-----------------------------------+
+O fluxo do sistema começa no cliente gRPC, que se comunica com o Gateway Server pela porta 50051. Em seguida, o Gateway publica uma mensagem JSON na fila (recharge_queue) do RabbitMQ Broker (utilizando as portas 5672 para a aplicação e 15672 para a interface web). O broker distribui as tarefas de forma justa entre múltiplos workers concorrentes que utilizam relógios vetoriais e o algoritmo Bully. Por fim, os workers processam as requisições e realizam a persistência dos dados de forma replicada através do módulo de armazenamento.
 
 ## Guia de Execução Local
 Certifique-se de ter o Docker e o Docker Compose instalados na sua máquina.
