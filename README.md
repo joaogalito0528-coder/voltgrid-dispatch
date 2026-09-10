@@ -30,7 +30,7 @@ voltgrid-dispatch/
 ├── requirements.txt
 └── README.md
 
-# **Arquitetura e Decisões Técnicas**
+# Arquitetura e Decisões Técnicas
 
 O projeto fundamenta-se no padrão "A Metrópole Resiliente" e atende rigorosamente aos seguintes requisitos técnicos:
 
