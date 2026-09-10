@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  # Broker de Mensageria (RabbitMQ com painel de controle web)
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: always
+
+  # Servidor gRPC Gateway
+  gateway:
+    build: .
+    command: python gateway/gateway_server.py
+    ports:
+      - "50051:50051"
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    depends_on:
+      - rabbitmq
+
+  # Nó Trabalhador 1 (Worker)
+  worker-1:
+    build: .
+    command: python worker/worker_node.py
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - NODE_ID=worker-1
+    depends_on:
+      - rabbitmq
